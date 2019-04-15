@@ -11,13 +11,19 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 
 /**
@@ -51,4 +57,23 @@ public class LevelLoader {
         }
         return output;
     }
+    
+    public static String [] loadData(String fileName) {
+        Scanner s = new Scanner(LevelLoader.class.getResourceAsStream(fileName));
+        String[] output;
+        try {
+            int length = (int) Files.lines((Path) LevelLoader.class.getResourceAsStream(fileName)).count();
+            output = new String[length];
+            int i = 0;
+            while(s.hasNextLine()) {
+                output[i] = s.nextLine().trim();
+                i++;
+            }
+        } catch (Exception e) {
+            output = new String[2];
+            output[0] = s.nextLine();
+            output[1] = s.nextLine();
+        }
+        return output;
+    } 
 }

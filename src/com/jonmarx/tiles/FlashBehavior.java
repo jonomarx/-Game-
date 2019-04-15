@@ -5,6 +5,7 @@
  */
 package com.jonmarx.tiles;
 
+import com.jonmarx.game.Main;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -21,8 +22,7 @@ public class FlashBehavior extends TileBehavior {
         } else {
             g.setColor(Color.BLACK);
         }
-        g.drawRect(x * 16, y * 16, 16, 16);
-        g.fillRect(x * 16, y * 16, 16, 16);
+        g.fillRect(x * Main.pixelSize, y * Main.pixelSize, Main.pixelSize, Main.pixelSize);
     }
 
     @Override

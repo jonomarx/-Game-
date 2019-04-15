@@ -5,9 +5,12 @@
  */
 package com.jonmarx.mobs;
 
+import com.jonmarx.game.Main;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -26,7 +29,7 @@ public class BasicBehavior extends EntityBehavior {
         } catch (IOException ex) {
             Logger.getLogger(BasicBehavior.class.getName()).log(Level.SEVERE, null, ex);
         }
-        g.drawImage(b, x * 16, y * 16, 16, 16, null);
+        g.drawImage(b, x * Main.pixelSize, y * Main.pixelSize, Main.pixelSize, Main.pixelSize, null);
     }
 
     @Override

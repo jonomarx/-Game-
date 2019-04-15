@@ -13,7 +13,7 @@ import com.jonmarx.tiles.TileBehavior;
  * @author Jon
  */
 public class TileManager {
-    private static Tile[][] tiles = new Tile[32][32];
+    private static Tile[][] tiles;
     
     public static void changeTile(int x, int y, Tile tile) {
         tiles[x][y] = tile;

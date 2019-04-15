@@ -5,9 +5,11 @@
  */
 package com.jonmarx.gfx;
 
+import com.jonmarx.game.EntityManager;
 import com.jonmarx.mobs.Entity;
 import com.jonmarx.tiles.Tile;
 import java.awt.*;
+import java.util.HashMap;
 
 
 /**
@@ -15,7 +17,11 @@ import java.awt.*;
  * @author Jon
  */
 public class Screen {
-    public static Graphics drawScreen(Graphics g, com.jonmarx.tiles.Tile[][] tiles, Entity[] entities,int frame) {
+    public static void drawScreen(Graphics g, Tile[][] tiles, HashMap<Integer, Entity> entities, int frame) {
+        drawScreen(g, tiles, EntityManager.getEntities().values().toArray(new Entity[0]), frame);
+    }
+    
+    public static void drawScreen(Graphics g, com.jonmarx.tiles.Tile[][] tiles, Entity[] entities,int frame) {
         int i = 0;
         int j = 0;
         for(Tile[] t : tiles) {
@@ -28,7 +34,7 @@ public class Screen {
             i++;
         }
         for(Entity entity : entities) {
-            entity.render(g);        }
-        return g;
+            entity.render(g);        
+        }
     }
 }

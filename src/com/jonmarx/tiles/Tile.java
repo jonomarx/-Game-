@@ -6,13 +6,14 @@
 package com.jonmarx.tiles;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  *
  * @author Jon
  */
-public class Tile {
+public class Tile implements Serializable {
     TileBehavior b;
     boolean isSolid;
     

@@ -6,6 +6,7 @@
 package com.jonmarx.game;
 
 import com.jonmarx.mobs.Entity;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -13,17 +14,21 @@ import java.util.LinkedList;
  * @author Jon
  */
 public class EntityManager {
-    private static LinkedList<Entity> list = new LinkedList<>();
+    private static HashMap<Integer, Entity> list = new HashMap<>();
     
-    public static void addEntity(Entity e) {
-        list.add(e);
+    public static void addEntity(int index, Entity e) {
+        list.put(index, e);
     }
     
-    public static void removeEntity(Entity e) {
-        list.remove(e);
+    public static void removeEntity(int index, Entity e) {
+        list.replace(index, e);
     }
     
-    public static Entity[] getEntities() {
-        return list.toArray(new Entity[list.size()]);
+    public static HashMap<Integer, Entity> getEntities() {
+        return list;
+    }
+    
+    public static void setup(HashMap<Integer, Entity> map) {
+        list = map;
     }
 }

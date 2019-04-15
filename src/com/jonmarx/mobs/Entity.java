@@ -6,12 +6,13 @@
 package com.jonmarx.mobs;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 
 /**
  *
  * @author Jon
  */
-public class Entity {
+public class Entity implements Serializable {
     private int x;
     private int y;
     private String fileName;

@@ -6,12 +6,13 @@
 package com.jonmarx.mobs;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 
 /**
  *
  * @author Jon
  */
-public abstract class EntityBehavior {
+public abstract class EntityBehavior implements Serializable {
     public abstract void render(Graphics g, String fileName, int x, int y);
     public abstract void update(int frame);
 }

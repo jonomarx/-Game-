@@ -5,6 +5,7 @@
  */
 package com.jonmarx.tiles;
 
+import com.jonmarx.game.Main;
 import java.awt.*;
 
 /**
@@ -16,8 +17,7 @@ public class BlackBehavior extends TileBehavior{
     @Override
     public void render(int frame, Graphics g, int x, int y) {
         g.setColor(Color.BLACK);
-        g.drawRect(x * 16, y * 16, 16, 16);
-        g.fillRect(x * 16, y * 16, 16, 16);
+        g.fillRect(x * Main.pixelSize, y * Main.pixelSize, Main.pixelSize, Main.pixelSize);
     }
 
     @Override
