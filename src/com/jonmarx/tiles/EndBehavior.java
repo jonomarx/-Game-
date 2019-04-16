@@ -5,6 +5,7 @@
  */
 package com.jonmarx.tiles;
 
+import com.jonmarx.game.Main;
 import static com.jonmarx.game.Main.pixelSize;
 import com.jonmarx.mobs.Entity;
 import java.awt.Color;
@@ -24,7 +25,7 @@ public class EndBehavior extends CollisionBehavior {
     @Override
     public void collide(Entity e) {
         JOptionPane.showMessageDialog(null, "Congrats, you won!");
-        System.exit(0);
+        Main.loadLevel("/com/jonmarx/images/levels/Maze/Maze");
     }
 
     @Override

@@ -34,6 +34,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -45,19 +46,23 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    static final String levelName = "/com/jonmarx/images/levels/Maze/Maze";
-    static final String[] data = LevelLoader.loadData(levelName + ".dat");
-    public static final int pixelSize = 16;
-    public static final int windowSize = 32;
-    static int xpush = Integer.parseInt(data[0]) - windowSize / 2;
-    static int ypush = Integer.parseInt(data[1]) - windowSize / 2;
+    static String levelName = "/com/jonmarx/images/levels/Maze/Maze";
+    public static final int pixelSize;
+    public static final int windowSize;
+    static int xpush;
+    static int ypush;
+    
+    static {
+        Scanner s = new Scanner(Main.class.getResourceAsStream("/com/jonmarx/game/conf/game.dat"));
+        pixelSize = s.nextInt();
+        windowSize = s.nextInt();
+        String[] data = LevelLoader.loadData(levelName + ".dat");
+        xpush = Integer.parseInt(data[0]) - windowSize / 2;
+        ypush = Integer.parseInt(data[1]) - windowSize / 2;
+    }
 
     public static void main(String[] args) {
-        HashMap<Integer, Tile> map = (HashMap<Integer, Tile>) loadMapFromFile(Main.class.getResourceAsStream(levelName + ".ti"));
-        HashMap<Integer, Entity> entities = (HashMap<Integer, Entity>) loadMapFromFile(Main.class.getResourceAsStream(levelName + ".en"));
-        
-        Tile[][] level = loadLevel(levelName + ".png", map);
-        EntityManager.setup(entities);
+        Tile[][] level = loadLevel(levelName);
         
         JFrame frame = new JFrame();
         frame.setSize(pixelSize * (windowSize + 1), pixelSize * (windowSize + 3) - 9);
@@ -83,7 +88,7 @@ public class Main {
                         continue;
                     }
                 }
-                Entity en = entities.get(0);
+                Entity en = EntityManager.getEntities().get(0);
                 if(KeyboardListener.w) {
                     if(TileManager.getTile(xpush + en.getLocation()[0], ypush + en.getLocation()[1] - 1).isSolid()) {
                         KeyboardListener.w = false;
@@ -151,9 +156,17 @@ public class Main {
     }
     
     // sets up the level, including tiles and entites.
-    public static Tile[][] loadLevel(String level, HashMap<Integer, Tile> tiles) {
-        Tile[][] levels = LevelLoader.compileLevel(tiles, LevelLoader.loadLevel(level));
+    // use where the filename is WITHOUT the extenion for example, /com/jonmarx/images/levels/Maze/Maze (not .png
+    public static Tile[][] loadLevel(String level) {
+        levelName = level;
+        HashMap<Integer, Tile> map = (HashMap<Integer, Tile>) loadMapFromFile(Main.class.getResourceAsStream(level + ".ti"));
+        HashMap<Integer, Entity> entities = (HashMap<Integer, Entity>) loadMapFromFile(Main.class.getResourceAsStream(level + ".en"));
+        Tile[][] levels = LevelLoader.compileLevel(map, LevelLoader.loadLevel(level + ".png"));
         TileManager.setup(levels);
+        EntityManager.setup(entities);
+        String[] data = LevelLoader.loadData(level + ".dat");
+        xpush = Integer.parseInt(data[0]) - windowSize / 2;
+        ypush = Integer.parseInt(data[1]) - windowSize / 2;
         return levels;
     }
     
