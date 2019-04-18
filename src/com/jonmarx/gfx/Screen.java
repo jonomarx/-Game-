@@ -6,6 +6,8 @@
 package com.jonmarx.gfx;
 
 import com.jonmarx.game.EntityManager;
+import com.jonmarx.game.Main;
+import com.jonmarx.game.TextBoxManager;
 import com.jonmarx.mobs.Entity;
 import com.jonmarx.tiles.Tile;
 import java.awt.*;
@@ -35,6 +37,14 @@ public class Screen {
         }
         for(Entity entity : entities) {
             entity.render(g);        
+        }
+        if(TextBoxManager.isOpen()) {
+            Tile[][] box = TextBoxManager.getBox();
+            for(int x = 0; x < box[0].length; x++) {
+                for(int y = 0; y < box.length; y++) {
+                    box[y][x].render(g, x, y + Main.windowSize - box.length, frame);
+                }
+            }
         }
     }
 }

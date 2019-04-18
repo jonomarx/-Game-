@@ -15,8 +15,9 @@ import com.jonmarx.tiles.ColorBehavior;
 import com.jonmarx.tiles.EndBehavior;
 import com.jonmarx.tiles.FlashBehavior;
 import com.jonmarx.tiles.Tile;
+import com.jonmarx.tiles.fonts.Font;
+import java.awt.Graphics;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -51,6 +52,7 @@ public class Main {
     public static final int windowSize;
     static int xpush;
     static int ypush;
+    public static HashMap<Character, Tile> font;
     
     static {
         Scanner s = new Scanner(Main.class.getResourceAsStream("/com/jonmarx/game/conf/game.dat"));
@@ -59,6 +61,7 @@ public class Main {
         String[] data = LevelLoader.loadData(levelName + ".dat");
         xpush = Integer.parseInt(data[0]) - windowSize / 2;
         ypush = Integer.parseInt(data[1]) - windowSize / 2;
+        font = com.jonmarx.tiles.fonts.Font.loadFont("/com/jonmarx/images/fonts/Font1/Font1");
     }
 
     public static void main(String[] args) {
@@ -89,6 +92,12 @@ public class Main {
                     }
                 }
                 Entity en = EntityManager.getEntities().get(0);
+                if(KeyboardListener.Enter) {
+                    TextBoxManager.closeTextBox();
+                    KeyboardListener.Enter = false;
+                    return;
+                }
+                if(TextBoxManager.isOpen()) return;
                 if(KeyboardListener.w) {
                     if(TileManager.getTile(xpush + en.getLocation()[0], ypush + en.getLocation()[1] - 1).isSolid()) {
                         KeyboardListener.w = false;
@@ -229,6 +238,7 @@ class KeyboardListener implements KeyListener {
     public static boolean a = false;
     public static boolean s = false;
     public static boolean d = false;
+    public static boolean Enter = false;
             
     @Override
     public void keyTyped(KeyEvent e) {
@@ -253,6 +263,9 @@ class KeyboardListener implements KeyListener {
             case KeyEvent.VK_D:
             case KeyEvent.VK_RIGHT:
                 d = true;
+                break;
+            case KeyEvent.VK_ENTER:
+                Enter = true;
                 break;
         }
     }
